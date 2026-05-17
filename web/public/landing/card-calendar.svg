@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320" fill="none" role="img" aria-labelledby="t2 d2">
+  <title id="t2">Weekly meal calendar</title>
+  <desc id="d2">Abstract week grid with highlighted days.</desc>
+  <defs>
+    <linearGradient id="g2" x1="40" y1="40" x2="440" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="320" rx="20" fill="url(#g2)" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="48" y="56" width="384" height="48" rx="10" fill="#0f766e" opacity="0.9"/>
+  <rect x="64" y="72" width="120" height="14" rx="4" fill="#ffffff" opacity="0.35"/>
+  <g opacity="0.9">
+    <rect x="48" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+    <rect x="104" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+    <rect x="160" y="120" width="48" height="40" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+    <rect x="216" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+    <rect x="272" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+    <rect x="328" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+    <rect x="384" y="120" width="48" height="40" rx="6" fill="#fff" stroke="#94a3b8"/>
+  </g>
+  <g opacity="0.85">
+    <rect x="48" y="172" width="104" height="56" rx="8" fill="#fff" stroke="#cbd5e1"/>
+    <rect x="164" y="172" width="104" height="56" rx="8" fill="#fff" stroke="#cbd5e1"/>
+    <rect x="280" y="172" width="152" height="56" rx="8" fill="#fff" stroke="#cbd5e1"/>
+  </g>
+  <rect x="48" y="244" width="384" height="40" rx="8" fill="#fef9c3" stroke="#eab308" stroke-width="1"/>
+</svg>

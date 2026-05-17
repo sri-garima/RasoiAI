@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="560" viewBox="0 0 800 560" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Stylized Indian thali illustration</title>
+  <desc id="desc">Abstract warm-toned plate with bowls suggesting a balanced meal.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff7ed"/>
+      <stop offset="0.45" stop-color="#ffedd5"/>
+      <stop offset="1" stop-color="#fed7aa"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="200" y1="120" x2="620" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fafaf9"/>
+      <stop offset="1" stop-color="#e7e5e4"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient id="bowl1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(330 240) rotate(90) scale(90)">
+      <stop stop-color="#fef3c7"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </radialGradient>
+    <radialGradient id="bowl2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(470 260) rotate(90) scale(75)">
+      <stop stop-color="#ecfccb"/>
+      <stop offset="1" stop-color="#4d7c0f"/>
+    </radialGradient>
+    <radialGradient id="bowl3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 360) rotate(90) scale(85)">
+      <stop stop-color="#fce7f3"/>
+      <stop offset="1" stop-color="#be185d"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="560" rx="32" fill="url(#bg)"/>
+  <ellipse cx="400" cy="300" rx="260" ry="200" fill="#fdba74" opacity="0.25" filter="url(#soft)"/>
+  <ellipse cx="400" cy="300" rx="220" ry="170" fill="url(#plate)" stroke="#d6d3d1" stroke-width="2"/>
+  <circle cx="330" cy="240" r="72" fill="url(#bowl1)" stroke="#b45309" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="470" cy="260" r="60" fill="url(#bowl2)" stroke="#3f6212" stroke-width="1.5" opacity="0.85"/>
+  <circle cx="400" cy="360" r="68" fill="url(#bowl3)" stroke="#9d174d" stroke-width="1.5" opacity="0.85"/>
+  <ellipse cx="400" cy="300" rx="42" ry="36" fill="#fefce8" stroke="#ca8a04" stroke-width="1.2"/>
+  <path d="M120 140c40-30 100-50 160-40" stroke="#78716c" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+  <path d="M680 420c-36 28-92 48-152 38" stroke="#78716c" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+</svg>
