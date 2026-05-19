@@ -1,10 +1,10 @@
-import { PhasePlaceholder } from "@/components/app/PhasePlaceholder";
+import { GroceryClient } from "@/components/grocery/GroceryClient";
+
+export const metadata = {
+  title: "Grocery List | Rasoi AI",
+  description: "Smart shopping list derived from your meal plan.",
+};
 
 export default function GroceryPage() {
-  return (
-    <PhasePlaceholder
-      title="Grocery"
-      description="Coming next phase. Missing ingredients and a smarter shopping list from your plans."
-    />
-  );
+  return <GroceryClient />;
 }

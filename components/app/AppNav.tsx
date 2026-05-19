@@ -2,9 +2,11 @@
 
 import { ChefHat, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useAuth } from "@/components/auth/AuthProvider";
+import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/cn";
 
 const appNav = [
@@ -18,7 +20,15 @@ const appNav = [
 
 export function AppNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { user, isLoading } = useAuth();
+
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.refresh();
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200/80 bg-cream/90 backdrop-blur-xl">
@@ -49,9 +59,24 @@ export function AppNav() {
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-3">
+          {!isLoading && user ? (
+            <button
+              onClick={handleSignOut}
+              className="hidden text-sm font-medium text-stone-500 hover:text-red-600 lg:inline transition"
+            >
+              Sign out
+            </button>
+          ) : !isLoading && !user ? (
+            <Link
+              href="/auth"
+              className="hidden text-sm font-medium text-stone-500 hover:text-deep-green lg:inline transition"
+            >
+              Sign in
+            </Link>
+          ) : null}
           <Link
             href="/"
-            className="hidden text-sm font-medium text-stone-500 underline-offset-4 hover:text-deep-green hover:underline lg:inline"
+            className="hidden text-sm font-medium text-stone-500 hover:text-deep-green lg:inline"
           >
             Marketing site
           </Link>
@@ -89,9 +114,28 @@ export function AppNav() {
                 {item.label}
               </Link>
             ))}
+            {!isLoading && user ? (
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setOpen(false);
+                }}
+                className="mt-2 text-left rounded-xl px-3 py-3 text-[15px] font-medium text-red-600 hover:bg-white/70"
+              >
+                Sign out
+              </button>
+            ) : !isLoading && !user ? (
+              <Link
+                href="/auth"
+                className="mt-2 rounded-xl px-3 py-3 text-[15px] font-medium text-deep-green hover:bg-white/70"
+                onClick={() => setOpen(false)}
+              >
+                Sign in
+              </Link>
+            ) : null}
             <Link
               href="/"
-              className="mt-2 rounded-xl px-3 py-3 text-[15px] font-medium text-stone-500 hover:bg-white/70"
+              className="mt-1 rounded-xl px-3 py-3 text-[15px] font-medium text-stone-500 hover:bg-white/70"
               onClick={() => setOpen(false)}
             >
               Marketing site

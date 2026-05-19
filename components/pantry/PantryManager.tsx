@@ -206,8 +206,7 @@ export function PantryManager() {
         <div className="mt-8 border-t border-stone-100 pt-8">
           {items.length === 0 ? (
             <p className="rounded-xl bg-cream/60 px-4 py-6 text-center text-sm leading-relaxed text-stone-600 ring-1 ring-stone-100">
-              Nothing here yet. Add a few staples—you will reuse this list when
-              daily and weekly plans arrive in a later phase.
+              Nothing here yet. Add a few staples—they will be prioritized when you generate daily and weekly meal plans.
             </p>
           ) : (
             <ul className="space-y-2" aria-label="Pantry items">

@@ -77,7 +77,7 @@ export function HeroSection() {
           </p>
 
           <div id="hero-cta" className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <CTAButton variant="primary" trailingIcon={ArrowRight}>
+            <CTAButton variant="primary" href="/home" trailingIcon={ArrowRight}>
               Start planning now
             </CTAButton>
             <CTAButton variant="ghost" icon={Play} href="#how-it-works">

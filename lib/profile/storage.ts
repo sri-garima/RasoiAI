@@ -1,5 +1,6 @@
 import { EMPTY_PROFILE } from "@/lib/profile/defaults";
 import type { UserProfile } from "@/lib/profile/types";
+import { pushProfileToCloud } from "@/lib/supabase/sync";
 
 const STORAGE_KEY = "rasoiai.profile.v1";
 
@@ -60,4 +61,5 @@ export function loadProfile(): UserProfile {
 export function saveProfile(profile: UserProfile): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+  pushProfileToCloud(profile).catch(console.error);
 }

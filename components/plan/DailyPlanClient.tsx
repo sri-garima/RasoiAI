@@ -18,6 +18,7 @@ import {
   generateDailyPlan,
 } from "@/lib/plan/generate-daily";
 import type { DailyPlan, SlotKey } from "@/lib/plan/types";
+import { saveLastDailyPlan } from "@/lib/plan/storage";
 import { loadPantry } from "@/lib/pantry/storage";
 import { loadProfile } from "@/lib/profile/storage";
 import type { UserProfile } from "@/lib/profile/types";
@@ -72,7 +73,9 @@ export function DailyPlanClient() {
     }
 
     if (mode === "rules") {
-      setPlan(generateDailyPlan(p, pa));
+      const newPlan = generateDailyPlan(p, pa);
+      setPlan(newPlan);
+      saveLastDailyPlan(newPlan);
       setGeneratedAt(Date.now());
       return;
     }
@@ -94,9 +97,11 @@ export function DailyPlanClient() {
       }
       if (!data.plan) throw new Error("No plan in response");
       setPlan(data.plan);
+      saveLastDailyPlan(data.plan);
       setGeneratedAt(Date.now());
     } catch (e) {
       setPlan(null);
+      saveLastDailyPlan(null);
       setGeneratedAt(null);
       setError(e instanceof Error ? e.message : "Something went wrong.");
     } finally {

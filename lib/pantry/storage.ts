@@ -1,4 +1,5 @@
 import type { PantryCategory, PantryItem } from "@/lib/pantry/types";
+import { pushPantryToCloud } from "@/lib/supabase/sync";
 
 const STORAGE_KEY = "rasoiai.pantry.v1";
 
@@ -41,4 +42,5 @@ export function loadPantry(): PantryItem[] {
 export function savePantry(items: PantryItem[]): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  pushPantryToCloud(items).catch(console.error);
 }

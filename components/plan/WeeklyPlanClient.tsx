@@ -16,6 +16,7 @@ import { MealSlotCard } from "@/components/plan/MealSlotCard";
 import { canGenerateDailyPlan } from "@/lib/plan/generate-daily";
 import { generateWeeklyPlanRules } from "@/lib/plan/generate-weekly";
 import type { SlotKey, WeeklyPlanDay } from "@/lib/plan/types";
+import { saveLastWeeklyPlan } from "@/lib/plan/storage";
 import { loadPantry } from "@/lib/pantry/storage";
 import { loadProfile } from "@/lib/profile/storage";
 import type { UserProfile } from "@/lib/profile/types";
@@ -67,7 +68,9 @@ export function WeeklyPlanClient() {
     }
 
     if (mode === "rules") {
-      setWeek(generateWeeklyPlanRules(p, pa));
+      const newWeek = generateWeeklyPlanRules(p, pa);
+      setWeek(newWeek);
+      saveLastWeeklyPlan(newWeek);
       setGeneratedAt(Date.now());
       return;
     }
@@ -91,9 +94,11 @@ export function WeeklyPlanClient() {
         throw new Error("Weekly response incomplete");
       }
       setWeek(data.days);
+      saveLastWeeklyPlan(data.days);
       setGeneratedAt(Date.now());
     } catch (e) {
       setWeek(null);
+      saveLastWeeklyPlan(null);
       setGeneratedAt(null);
       setError(e instanceof Error ? e.message : "Something went wrong.");
     } finally {

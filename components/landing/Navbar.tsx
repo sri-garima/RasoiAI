@@ -79,7 +79,7 @@ export function Navbar() {
           >
             My kitchen
           </Link>
-          <CTAButton variant="primary" href="#hero-cta" trailingIcon={ArrowRight}>
+          <CTAButton variant="primary" href="/home" trailingIcon={ArrowRight}>
             Start Planning
           </CTAButton>
         </div>
@@ -127,7 +127,7 @@ export function Navbar() {
                 <CTAButton
                   variant="primary"
                   className="w-full"
-                  href="#hero-cta"
+                  href="/home"
                   trailingIcon={ArrowRight}
                   onClick={() => setOpen(false)}
                 >
