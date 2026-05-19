@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       {
         error: "not_configured",
         message:
-          "Add OPENAI_API_KEY to web/.env.local (see web/.env.example). Optional: OPENAI_MODEL=gpt-4o-mini",
+          "Add OPENAI_API_KEY to .env.local (see .env.example). Optional: OPENAI_MODEL=gpt-4o-mini",
       },
       { status: 503 },
     );

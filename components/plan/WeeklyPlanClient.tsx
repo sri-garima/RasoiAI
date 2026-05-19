@@ -36,7 +36,6 @@ type GenMode = "rules" | "ai";
 export function WeeklyPlanClient() {
   const [hydrated, setHydrated] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [pantry, setPantry] = useState<PantryItem[]>([]);
   const [week, setWeek] = useState<WeeklyPlanDay[] | null>(null);
   const [generatedAt, setGeneratedAt] = useState<number | null>(null);
   const [mode, setMode] = useState<GenMode>("rules");
@@ -45,7 +44,6 @@ export function WeeklyPlanClient() {
 
   const refreshInputs = useCallback(() => {
     setProfile(loadProfile());
-    setPantry(loadPantry());
   }, []);
 
   useEffect(() => {
@@ -62,7 +60,6 @@ export function WeeklyPlanClient() {
     const p = loadProfile();
     const pa = loadPantry();
     setProfile(p);
-    setPantry(pa);
     if (!canGenerateDailyPlan(p)) {
       setWeek(null);
       setGeneratedAt(null);
