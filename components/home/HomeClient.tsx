@@ -8,6 +8,7 @@ import { loadProfile } from "@/lib/profile/storage";
 import { loadPantry } from "@/lib/pantry/storage";
 import { loadLastDailyPlan, loadLastWeeklyPlan } from "@/lib/plan/storage";
 import { canGenerateDailyPlan } from "@/lib/plan/generate-daily";
+import { RatingPanel } from "@/components/home/RatingPanel";
 import { cn } from "@/lib/cn";
 
 export function HomeClient() {
@@ -160,6 +161,9 @@ export function HomeClient() {
           </Link>
         </div>
       )}
+
+      {/* Render the rating panel at the bottom of the dashboard */}
+      <RatingPanel />
     </div>
   );
 }
