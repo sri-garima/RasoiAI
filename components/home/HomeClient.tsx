@@ -2,7 +2,7 @@
 
 import { startTransition, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, CheckCircle2, ChevronRight, Circle, ClipboardList, UtensilsCrossed } from "lucide-react";
+import { BookOpen, CheckCircle2, ChevronRight, Circle, ClipboardList, UtensilsCrossed } from "lucide-react";
 
 import { loadProfile } from "@/lib/profile/storage";
 import { loadPantry } from "@/lib/pantry/storage";
@@ -144,23 +144,6 @@ export function HomeClient() {
           );
         })}
       </div>
-
-      {hasPlan && (
-        <div className="mt-10">
-          <Link
-            href="/grocery"
-            className="group flex items-center justify-between rounded-2xl bg-deep-green px-6 py-5 text-white shadow-lg shadow-deep-green/20 transition hover:bg-deep-green/90"
-          >
-            <div>
-              <h3 className="font-semibold text-lg">Go shopping</h3>
-              <p className="mt-1 text-white/80 text-sm">View your smart grocery list based on your plan.</p>
-            </div>
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/20 transition group-hover:bg-white/30">
-              <ArrowRight className="size-5" />
-            </div>
-          </Link>
-        </div>
-      )}
 
       {/* Render the rating panel at the bottom of the dashboard */}
       <RatingPanel />

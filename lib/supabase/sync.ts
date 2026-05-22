@@ -17,7 +17,7 @@ export async function syncDataWithCloud() {
       .from('profiles')
       .select('data')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
 
     const localProfile = loadProfile();
 
@@ -27,7 +27,9 @@ export async function syncDataWithCloud() {
     } else {
       // Push local to cloud
       if (localProfile.name) {
-        await supabase.from('profiles').upsert({ user_id: userId, data: localProfile });
+        await supabase
+          .from('profiles')
+          .upsert({ user_id: userId, data: localProfile }, { onConflict: 'user_id' });
       }
     }
 
@@ -36,14 +38,16 @@ export async function syncDataWithCloud() {
       .from('pantries')
       .select('data')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
       
     const localPantry = loadPantry();
 
     if (cloudPantry?.data && cloudPantry.data.length > 0) {
       savePantry(cloudPantry.data);
     } else if (localPantry.length > 0) {
-      await supabase.from('pantries').upsert({ user_id: userId, data: localPantry });
+      await supabase
+        .from('pantries')
+        .upsert({ user_id: userId, data: localPantry }, { onConflict: 'user_id' });
     }
 
     // 3. Sync Daily Plan
@@ -51,14 +55,16 @@ export async function syncDataWithCloud() {
       .from('daily_plans')
       .select('data')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
       
     const localDaily = loadLastDailyPlan();
 
     if (cloudDaily?.data) {
       saveLastDailyPlan(cloudDaily.data);
     } else if (localDaily) {
-      await supabase.from('daily_plans').upsert({ user_id: userId, data: localDaily });
+      await supabase
+        .from('daily_plans')
+        .upsert({ user_id: userId, data: localDaily }, { onConflict: 'user_id' });
     }
 
     // 4. Sync Weekly Plan
@@ -66,14 +72,16 @@ export async function syncDataWithCloud() {
       .from('weekly_plans')
       .select('data')
       .eq('user_id', userId)
-      .single();
+      .maybeSingle();
       
     const localWeekly = loadLastWeeklyPlan();
 
     if (cloudWeekly?.data) {
       saveLastWeeklyPlan(cloudWeekly.data);
     } else if (localWeekly) {
-      await supabase.from('weekly_plans').upsert({ user_id: userId, data: localWeekly });
+      await supabase
+        .from('weekly_plans')
+        .upsert({ user_id: userId, data: localWeekly }, { onConflict: 'user_id' });
     }
   } catch (err) {
     console.error("Error syncing data with cloud:", err);
@@ -84,26 +92,34 @@ export async function pushProfileToCloud(data: any) {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) return;
-  await supabase.from('profiles').upsert({ user_id: session.user.id, data });
+  await supabase
+    .from('profiles')
+    .upsert({ user_id: session.user.id, data }, { onConflict: 'user_id' });
 }
 
 export async function pushPantryToCloud(data: any) {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) return;
-  await supabase.from('pantries').upsert({ user_id: session.user.id, data });
+  await supabase
+    .from('pantries')
+    .upsert({ user_id: session.user.id, data }, { onConflict: 'user_id' });
 }
 
 export async function pushDailyPlanToCloud(data: any) {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) return;
-  await supabase.from('daily_plans').upsert({ user_id: session.user.id, data });
+  await supabase
+    .from('daily_plans')
+    .upsert({ user_id: session.user.id, data }, { onConflict: 'user_id' });
 }
 
 export async function pushWeeklyPlanToCloud(data: any) {
   const supabase = createClient();
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) return;
-  await supabase.from('weekly_plans').upsert({ user_id: session.user.id, data });
+  await supabase
+    .from('weekly_plans')
+    .upsert({ user_id: session.user.id, data }, { onConflict: 'user_id' });
 }

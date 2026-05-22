@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { cn } from "@/lib/cn";
 
 export function AuthClient() {
@@ -13,7 +14,17 @@ export function AuthClient() {
   const [error, setError] = useState<string | null>(null);
   
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user, isLoading: authLoading } = useAuth();
   const supabase = createClient();
+
+  const redirect = searchParams.get("redirect") || "/profile";
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push(redirect);
+    }
+  }, [user, authLoading, redirect, router]);
 
   async function handleAuth(e: React.FormEvent) {
     e.preventDefault();
@@ -37,13 +48,22 @@ export function AuthClient() {
         if (error) throw error;
       }
       
-      router.push("/home");
+      router.push(redirect);
       router.refresh();
     } catch (err: any) {
       setError(err.message || "An error occurred during authentication.");
     } finally {
       setLoading(false);
     }
+  }
+
+  if (authLoading) {
+    return (
+      <div className="mx-auto max-w-md px-5 py-16 sm:px-6 text-center animate-pulse" aria-busy="true">
+        <div className="h-8 w-40 rounded-lg bg-stone-200/80 mx-auto" />
+        <div className="mt-6 h-64 rounded-2xl bg-stone-200/60" />
+      </div>
+    );
   }
 
   return (

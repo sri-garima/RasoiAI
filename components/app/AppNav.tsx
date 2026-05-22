@@ -15,7 +15,6 @@ const appNav = [
   { href: "/pantry", label: "Pantry" },
   { href: "/plan/daily", label: "Plan (daily)" },
   { href: "/plan/weekly", label: "Plan (weekly)" },
-  { href: "/grocery", label: "Grocery" },
 ] as const;
 
 export function AppNav() {
@@ -27,6 +26,14 @@ export function AppNav() {
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("rasoiai.profile.v1");
+      window.localStorage.removeItem("rasoiai.pantry.v1");
+      window.localStorage.removeItem("rasoiai.plan.daily.v1");
+      window.localStorage.removeItem("rasoiai.plan.weekly.v1");
+      window.localStorage.removeItem("rasoiai.grocery.checked.v1");
+    }
+    router.push("/");
     router.refresh();
   };
 

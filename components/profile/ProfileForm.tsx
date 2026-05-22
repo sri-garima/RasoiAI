@@ -1,7 +1,9 @@
 "use client";
 
 import { startTransition, useEffect, useId, useState } from "react";
+import { useRouter } from "next/navigation";
 
+import { useAuth } from "@/components/auth/AuthProvider";
 import { EMPTY_PROFILE } from "@/lib/profile/defaults";
 import { loadProfile, saveProfile } from "@/lib/profile/storage";
 import type { UserProfile } from "@/lib/profile/types";
@@ -38,13 +40,21 @@ export function ProfileForm() {
   const [values, setValues] = useState<UserProfile>(EMPTY_PROFILE);
   const [errors, setErrors] = useState<ProfileFieldErrors>({});
   const [savedFlash, setSavedFlash] = useState(false);
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    startTransition(() => {
-      setValues(loadProfile());
-      setHydrated(true);
-    });
-  }, []);
+    if (!isLoading && !user) {
+      router.push("/auth?redirect=/profile");
+      return;
+    }
+    if (user) {
+      startTransition(() => {
+        setValues(loadProfile());
+        setHydrated(true);
+      });
+    }
+  }, [user, isLoading, router]);
 
   function set<K extends keyof UserProfile>(key: K, v: UserProfile[K]) {
     setValues((prev) => ({ ...prev, [key]: v }));
@@ -76,7 +86,7 @@ export function ProfileForm() {
     window.setTimeout(() => setSavedFlash(false), 3200);
   }
 
-  if (!hydrated) {
+  if (!hydrated || isLoading) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-10 sm:px-6" aria-busy="true">
         <div className="h-8 w-40 animate-pulse rounded-lg bg-stone-200/80" />
