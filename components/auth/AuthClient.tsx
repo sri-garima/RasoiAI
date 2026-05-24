@@ -127,6 +127,13 @@ export function AuthClient() {
       return;
     }
 
+    const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://mock.supabase.co";
+    if (!isConfigured) {
+      setError("Supabase is not configured. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in your .env.local file, and restart your development server (npm run dev).");
+      setLoading(false);
+      return;
+    }
+
     try {
       if (isSignUp) {
         const { data, error: signUpError } = await supabase.auth.signUp({
@@ -173,6 +180,13 @@ export function AuthClient() {
 
     if (!email) {
       setFieldErrors({ email: "Email is required to reset password." });
+      setLoading(false);
+      return;
+    }
+
+    const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://mock.supabase.co";
+    if (!isConfigured) {
+      setError("Supabase is not configured. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in your .env.local file, and restart your development server (npm run dev).");
       setLoading(false);
       return;
     }
@@ -664,9 +678,16 @@ export function AuthClient() {
         </form>
       )}
       
-      <div className="mt-8 rounded-xl bg-amber-50 border border-amber-100 p-4 text-xs sm:text-sm text-amber-900 text-center">
-        <strong>Note:</strong> Authentication requires configuration of <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in your environment.
-      </div>
+      {(!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL === "https://mock.supabase.co") ? (
+        <div className="mt-8 rounded-xl bg-red-50 border border-red-200 p-4 text-xs sm:text-sm text-red-900 text-center">
+          <strong>⚠️ Supabase is not configured:</strong> Environment variables are missing or not loaded. 
+          If you recently created or edited your <code>.env.local</code> file, please <strong>restart your development server</strong> (stop the running terminal process and run <code>npm run dev</code> again).
+        </div>
+      ) : (
+        <div className="mt-8 rounded-xl bg-green-50 border border-green-200 p-4 text-xs sm:text-sm text-green-900 text-center">
+          <strong>✓ Supabase is connected:</strong> Environment variables are loaded.
+        </div>
+      )}
     </div>
   );
 }

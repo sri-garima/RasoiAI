@@ -35,6 +35,13 @@ export function UpdatePasswordClient() {
       return;
     }
 
+    const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_URL !== "https://mock.supabase.co";
+    if (!isConfigured) {
+      setError("Supabase is not configured. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in your .env.local file, and restart your development server (npm run dev).");
+      setLoading(false);
+      return;
+    }
+
     try {
       const { error: updateError } = await supabase.auth.updateUser({
         password: password,
