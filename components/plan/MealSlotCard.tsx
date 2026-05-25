@@ -22,7 +22,139 @@ const INDIAN_FOOD_IMAGES = [
   "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=600&q=80",
 ];
 
-function getMealImage(name: string) {
+function getMealImage(name: string): string {
+  const lowerName = name.toLowerCase();
+
+  // 1. South Indian Breakfasts (Dosa, Uttapam)
+  if (lowerName.includes("dosa") || lowerName.includes("uttapam")) {
+    return "https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=600&q=80";
+  }
+  // 2. Idli
+  if (lowerName.includes("idli")) {
+    return "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80";
+  }
+  // 3. Poha
+  if (lowerName.includes("poha")) {
+    return "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80";
+  }
+  // 4. Paratha / Roti / Naan / Phulka / Bhakri / Flatbread / Luchi / Poori
+  if (
+    lowerName.includes("paratha") || 
+    lowerName.includes("roti") || 
+    lowerName.includes("naan") || 
+    lowerName.includes("phulka") || 
+    lowerName.includes("bhakri") || 
+    lowerName.includes("luchi") || 
+    lowerName.includes("poori") ||
+    lowerName.includes("radhaballabhi")
+  ) {
+    return "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=600&q=80";
+  }
+  // 5. Paneer dishes
+  if (lowerName.includes("paneer")) {
+    return "https://images.unsplash.com/photo-1631452180519-c014fe946bc0?auto=format&fit=crop&w=600&q=80";
+  }
+  // 6. Chole / Chana / Chickpeas / Bhature
+  if (lowerName.includes("chole") || lowerName.includes("chana") || lowerName.includes("bhature") || lowerName.includes("sundal")) {
+    return "https://images.unsplash.com/photo-1589302168068-964664d93cb0?auto=format&fit=crop&w=600&q=80";
+  }
+  // 7. Rice / Pulao / Biryani / Bhaat / Bath / Pongal
+  if (
+    lowerName.includes("rice") || 
+    lowerName.includes("pulao") || 
+    lowerName.includes("biryani") || 
+    lowerName.includes("bhaat") || 
+    lowerName.includes("bath") || 
+    lowerName.includes("pongal")
+  ) {
+    return "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=600&q=80";
+  }
+  // 8. Khichdi
+  if (lowerName.includes("khichdi")) {
+    return "https://images.unsplash.com/photo-1624462966581-bc6d768cbce5?auto=format&fit=crop&w=600&q=80";
+  }
+  // 9. Dal / Tadka / Lentils / Sambar / Rasam / Shukto / Posto
+  if (lowerName.includes("dal") || lowerName.includes("posto") || lowerName.includes("shukto") || lowerName.includes("rasam") || lowerName.includes("sambar")) {
+    return "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80";
+  }
+  // 10. Kadhi
+  if (lowerName.includes("kadhi")) {
+    return "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80";
+  }
+  // 11. Toast / Sandwich / Bread / French Toast
+  if (lowerName.includes("toast") || lowerName.includes("sandwich") || lowerName.includes("bread")) {
+    return "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80";
+  }
+  // 12. Dhokla
+  if (lowerName.includes("dhokla")) {
+    return "https://images.unsplash.com/photo-1628149455678-16f37bc392f4?auto=format&fit=crop&w=600&q=80";
+  }
+  // 13. Upma
+  if (lowerName.includes("upma")) {
+    return "https://images.unsplash.com/photo-1608797178974-15b35a61d121?auto=format&fit=crop&w=600&q=80";
+  }
+  // 14. Fruits / Salad / Sprouts / Bhel / Jhal Muri
+  if (lowerName.includes("fruit") || lowerName.includes("chaat")) {
+    return "https://images.unsplash.com/photo-1519996521430-02b798c1d881?auto=format&fit=crop&w=600&q=80";
+  }
+  if (lowerName.includes("salad") || lowerName.includes("sprout") || lowerName.includes("bhel") || lowerName.includes("muri")) {
+    return "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80";
+  }
+  // 15. Tea / Chai / Coffee
+  if (lowerName.includes("chai") || lowerName.includes("tea") || lowerName.includes("coffee") || lowerName.includes("cha")) {
+    return "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80";
+  }
+  // 16. Egg
+  if (lowerName.includes("egg")) {
+    return "https://images.unsplash.com/photo-1598214886806-c87b84b7078b?auto=format&fit=crop&w=600&q=80";
+  }
+  // 17. Chicken / Mutton / Keema / Meat
+  if (lowerName.includes("chicken") || lowerName.includes("mutton") || lowerName.includes("keema") || lowerName.includes("meat")) {
+    return "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80";
+  }
+  // 18. Fish
+  if (lowerName.includes("fish")) {
+    return "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?auto=format&fit=crop&w=600&q=80";
+  }
+  // 19. Pav Bhaji / Misal Pav
+  if (lowerName.includes("pav") || lowerName.includes("bhaji") || lowerName.includes("misal")) {
+    return "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=600&q=80";
+  }
+  // 20. Curd / Dahi / Raita
+  if (lowerName.includes("curd") || lowerName.includes("dahi") || lowerName.includes("raita")) {
+    return "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80";
+  }
+  // 21. General Snacks (makhana, mathri, chips, khakhra, murukku, namkeen, singara, vadi, patra)
+  if (
+    lowerName.includes("makhana") ||
+    lowerName.includes("chips") ||
+    lowerName.includes("khakhra") ||
+    lowerName.includes("murukku") ||
+    lowerName.includes("namkeen") ||
+    lowerName.includes("singara") ||
+    lowerName.includes("vadi") ||
+    lowerName.includes("patra") ||
+    lowerName.includes("mathri")
+  ) {
+    return "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=600&q=80";
+  }
+  // 22. General Veg / Sabzi / Curry
+  if (
+    lowerName.includes("veg") ||
+    lowerName.includes("sabzi") ||
+    lowerName.includes("kofta") ||
+    lowerName.includes("curry") ||
+    lowerName.includes("bhindi") ||
+    lowerName.includes("vangi") ||
+    lowerName.includes("capsicum") ||
+    lowerName.includes("lauki") ||
+    lowerName.includes("stew") ||
+    lowerName.includes("avial")
+  ) {
+    return "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80";
+  }
+
+  // Fallback to the existing deterministic hash-based lookup
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
@@ -57,15 +189,20 @@ export function MealSlotCard({
         className,
       )}
     >
-      <div className={cn("relative w-full overflow-hidden shrink-0", dense ? "h-28" : "h-36 sm:h-44")}>
+      <div className={cn("relative w-full overflow-hidden shrink-0", dense ? "h-24" : "h-36 sm:h-44")}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src={getMealImage(meal.name)} 
           alt={meal.name} 
-          className="object-cover w-full h-full transition-transform hover:scale-105 duration-700" 
+          className={cn(
+            "object-cover w-full h-full transition-all duration-700",
+            dense 
+              ? "opacity-90 filter brightness-[0.88] saturate-[0.85] hover:opacity-100 hover:brightness-100 hover:saturate-100 hover:scale-105" 
+              : "hover:scale-105"
+          )}
           loading="lazy" 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
         
         <div className="absolute top-3 right-3">
           <span

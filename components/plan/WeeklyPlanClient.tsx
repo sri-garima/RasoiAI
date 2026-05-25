@@ -117,7 +117,7 @@ export function WeeklyPlanClient() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-12 print:max-w-none print:px-3">
+    <div className="mx-auto max-w-[90rem] px-5 sm:px-8 py-10 sm:py-12 print:max-w-none print:px-3">
       <header className="mb-8 print:mb-4">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-deep-green">
           Weekly plan
@@ -279,7 +279,7 @@ export function WeeklyPlanClient() {
 
             {week ? (
               <div className="-mx-1 overflow-x-auto pb-2 print:overflow-visible">
-                <div className="flex min-w-[min(100%,1120px)] gap-3 md:grid md:min-w-0 md:grid-cols-7 md:gap-2 lg:gap-3 print:flex print:flex-wrap print:justify-between">
+                <div className="flex min-w-[min(100%,1180px)] gap-4 md:grid md:min-w-0 md:grid-cols-7 md:gap-3 lg:gap-4 xl:gap-5 print:flex print:flex-wrap print:justify-between">
                   {week.map((day) => (
                     <section
                       key={day.key}
@@ -289,7 +289,7 @@ export function WeeklyPlanClient() {
                         <span className="md:hidden">{day.key}</span>
                         <span className="hidden md:inline">{day.label}</span>
                       </h2>
-                      <div className="space-y-2">
+                      <div className="space-y-4">
                         {SLOT_ORDER.map((slot) => (
                           <MealSlotCard
                             key={slot}
