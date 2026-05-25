@@ -18,7 +18,7 @@ import {
   generateDailyPlan,
 } from "@/lib/plan/generate-daily";
 import type { DailyPlan, SlotKey } from "@/lib/plan/types";
-import { saveLastDailyPlan } from "@/lib/plan/storage";
+import { loadLastDailyPlan, saveLastDailyPlan } from "@/lib/plan/storage";
 import { loadPantry } from "@/lib/pantry/storage";
 import { loadProfile } from "@/lib/profile/storage";
 import type { UserProfile } from "@/lib/profile/types";
@@ -34,15 +34,13 @@ const SLOT_LABEL: Record<SlotKey, string> = {
 
 const SLOT_ORDER: SlotKey[] = ["breakfast", "lunch", "snack", "dinner"];
 
-type GenMode = "rules" | "ai";
-
 export function DailyPlanClient() {
   const [hydrated, setHydrated] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [pantry, setPantry] = useState<PantryItem[]>([]);
   const [plan, setPlan] = useState<DailyPlan | null>(null);
   const [generatedAt, setGeneratedAt] = useState<number | null>(null);
-  const [mode, setMode] = useState<GenMode>("rules");
+  const [mode, setMode] = useState<"rules" | "ai">("rules");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,6 +52,11 @@ export function DailyPlanClient() {
   useEffect(() => {
     startTransition(() => {
       refreshInputs();
+      const savedPlan = loadLastDailyPlan();
+      if (savedPlan) {
+        setPlan(savedPlan);
+        setGeneratedAt(Date.now());
+      }
       setHydrated(true);
     });
   }, [refreshInputs]);
@@ -72,33 +75,36 @@ export function DailyPlanClient() {
       return;
     }
 
-    if (mode === "rules") {
-      const newPlan = generateDailyPlan(p, pa);
-      setPlan(newPlan);
-      saveLastDailyPlan(newPlan);
-      setGeneratedAt(Date.now());
-      return;
-    }
-
     setLoading(true);
     try {
-      const res = await fetch("/api/plan/daily-ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profile: p, pantry: pa }),
-      });
-      const data = (await res.json()) as {
-        plan?: DailyPlan;
-        error?: string;
-        message?: string;
-      };
-      if (!res.ok) {
-        throw new Error(data.message || data.error || `Request failed (${res.status})`);
+      if (mode === "rules") {
+        // Use a random salt as seedExtra to force a completely fresh plan on (Re)generate
+        const salt = Math.random().toString(36).substring(7);
+        const newPlan = generateDailyPlan(p, pa, { seedExtra: salt });
+        setPlan(newPlan);
+        saveLastDailyPlan(newPlan);
+        setGeneratedAt(Date.now());
+      } else {
+        const res = await fetch("/api/plan/daily-ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ profile: p, pantry: pa }),
+        });
+        const data = (await res.json()) as {
+          plan?: DailyPlan;
+          error?: string;
+          message?: string;
+        };
+        if (!res.ok) {
+          throw new Error(data.message || data.error || `Request failed (${res.status})`);
+        }
+        if (!data.plan) {
+          throw new Error("Daily response incomplete");
+        }
+        setPlan(data.plan);
+        saveLastDailyPlan(data.plan);
+        setGeneratedAt(Date.now());
       }
-      if (!data.plan) throw new Error("No plan in response");
-      setPlan(data.plan);
-      saveLastDailyPlan(data.plan);
-      setGeneratedAt(Date.now());
     } catch (e) {
       setPlan(null);
       saveLastDailyPlan(null);
